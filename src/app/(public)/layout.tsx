@@ -1,3 +1,5 @@
+import Navbar from "@/components/shared/Navbar/Navbar";
+
 export default function PublicLayout({
   children,
 }: Readonly<{
@@ -5,6 +7,7 @@ export default function PublicLayout({
 }>) {
   return (
     <>
+      <Navbar></Navbar>
       <main className="min-h-dvh">{children}</main>
     </>
   );
