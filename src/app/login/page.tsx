@@ -1,8 +1,7 @@
 "use client";
 
 import type React from "react";
-
-import Link from "next/link";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,29 +9,45 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { Library, Mail } from "lucide-react";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
+
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-    // TODO: Implement login logic using NextAuth.js
-    console.log("Login attempt:", { email, password });
-    alert("Login functionality would be implemented here!");
-  };
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+        credentials: "include", // ✅ needed for cookies
+      });
 
-  const handleGoogleLogin = () => {
-    // TODO: Implement Google login logic using NextAuth.js
-    console.log("Google login attempt");
-    alert("Google login would be implemented here!");
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        toast.error(data.message || "Invalid login credentials");
+      } else {
+        toast.success("Logged in successfully!");
+        // Redirect to dashboard or reload
+        window.location.href = "/dashboard";
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -67,8 +82,8 @@ export default function LoginPage() {
                   required
                 />
               </div>
-              <Button type="submit" className="w-full">
-                Sign in
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? "Signing in..." : "Sign in"}
               </Button>
             </form>
           </CardContent>
