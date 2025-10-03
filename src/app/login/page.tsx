@@ -40,7 +40,7 @@ export default function LoginPage() {
       } else {
         toast.success("Logged in successfully!");
         // Redirect to dashboard or reload
-        window.location.href = "/dashboard";
+        window.location.href = "/dashboard/blogs";
       }
     } catch (err) {
       console.error("Login error:", err);

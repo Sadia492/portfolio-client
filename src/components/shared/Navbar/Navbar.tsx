@@ -17,8 +17,6 @@ const Navbar = () => {
     router.refresh();
   };
 
-  console.log("Navbar user:", user); // Debug log
-
   return (
     <nav className="fixed top-6 inset-x-4 h-16 max-w-screen-xl mx-auto rounded-full bg-background border dark:border-slate-700/70 z-30">
       <div className="flex h-full items-center justify-between px-6 md:px-8">

@@ -2,9 +2,17 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Home, PlusCircle, LogOut } from "lucide-react";
+import { Home, PlusCircle, LogOut, Book } from "lucide-react";
+import { useAuth } from "@/actions/useAuth";
+import { useRouter } from "next/navigation";
 
 export default function Sidebar() {
+  const { logout } = useAuth();
+  const router = useRouter();
+  const handleLogout = async () => {
+    await logout();
+    router.push("/");
+  };
   return (
     <aside className="flex h-screen w-64 flex-col border-r bg-black text-white">
       {/* Top navigation */}
@@ -18,11 +26,11 @@ export default function Sidebar() {
         </Link>
 
         <Link
-          href="/dashboard/create-blog"
+          href="/dashboard/blogs"
           className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium hover:bg-gray-100 hover:text-black"
         >
-          <PlusCircle className="h-4 w-4" />
-          Create Blog
+          <Book className="h-4 w-4" />
+          All Blogs
         </Link>
       </nav>
 
@@ -31,9 +39,7 @@ export default function Sidebar() {
         <Button
           variant="destructive"
           className="w-full justify-start gap-2 cursor-pointer"
-          onClick={() => {
-            console.log("Logout clicked");
-          }}
+          onClick={handleLogout}
         >
           <LogOut className="h-4 w-4" />
           Logout

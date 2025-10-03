@@ -71,7 +71,7 @@ export const NavMenu = (props: NavigationMenuProps) => {
           <NavigationMenuItem>
             <NavigationMenuLink asChild>
               <Link
-                href="/dashboard"
+                href="/dashboard/blogs"
                 className="hover:text-primary transition-colors"
               >
                 Dashboard

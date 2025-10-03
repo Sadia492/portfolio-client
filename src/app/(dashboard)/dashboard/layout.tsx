@@ -8,7 +8,7 @@ export default function DashboardLayout({
   return (
     <main className="min-h-dvh flex gap-4">
       <Sidebar />
-      {children}
+      <div className="flex-1">{children}</div> {/* <-- important */}
     </main>
   );
 }
