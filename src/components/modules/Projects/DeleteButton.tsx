@@ -6,10 +6,10 @@ import Swal from "sweetalert2";
 
 interface DeleteButtonProps {
   projectId: string;
-  token?: string; // Optional if you use auth
+  // Remove token prop completely
 }
 
-export function DeleteButton({ projectId, token }: DeleteButtonProps) {
+export function DeleteButton({ projectId }: DeleteButtonProps) {
   const handleDelete = async () => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -28,11 +28,8 @@ export function DeleteButton({ projectId, token }: DeleteButtonProps) {
           `${process.env.NEXT_PUBLIC_API_URL}/api/projects/${projectId}`,
           {
             method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              ...(token ? { Authorization: `Bearer ${token}` } : {}),
-            },
-            credentials: "include",
+            credentials: "include", // ✅ Browser sends cookies automatically
+            // Remove all headers - no manual token needed
           }
         );
 

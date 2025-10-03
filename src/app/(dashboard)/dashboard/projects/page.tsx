@@ -93,7 +93,7 @@ export default async function ProjectsPage() {
     projectsData = await getProjects();
   } catch (error) {
     return (
-      <div className="min-h-screen bg-gray-50 py-20">
+      <div className="bg-gray-50 py-20">
         <div className="container mx-auto px-6">
           <div className="text-center">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text mb-4">
@@ -118,7 +118,7 @@ export default async function ProjectsPage() {
   const projects = projectsData.data;
 
   return (
-    <div className="min-h-screen bg-gray-50 py-20">
+    <div className=" bg-gray-50 py-20">
       <div className="container mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16">
