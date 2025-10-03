@@ -21,8 +21,8 @@ interface Blog {
 
 export default function EditBlogPage() {
   const router = useRouter();
-  const params = useParams();
-  const blogId = params.id as string;
+  const params = useParams() as { id: string };
+  const blogId = params.id;
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);

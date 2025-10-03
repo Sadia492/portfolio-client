@@ -12,15 +12,16 @@ interface Blog {
   };
 }
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
+export default async function BlogViewPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  // Await the params Promise
+  const { id } = await params;
 
-export default async function BlogViewPage({ params }: PageProps) {
-  const { id } = params;
   console.log(id);
+
   // Fetch single blog from API
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/blogs/by-id/${id}`,
@@ -28,7 +29,6 @@ export default async function BlogViewPage({ params }: PageProps) {
       cache: "no-store",
     }
   );
-  //   console.log(res);
 
   if (!res.ok) {
     return (

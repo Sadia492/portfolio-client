@@ -41,9 +41,12 @@ interface ProjectResponse {
 export const revalidate = 120;
 
 async function getProject(id: string): Promise<ProjectResponse> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects/${id}`, {
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/projects/${id}`,
+    {
+      cache: "no-store",
+    }
+  );
 
   if (!res.ok) {
     if (res.status === 404) {
@@ -58,7 +61,7 @@ async function getProject(id: string): Promise<ProjectResponse> {
 // Generate static paths for projects
 export async function generateStaticParams() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects`, {
       next: { revalidate: 3600 },
     });
 
@@ -102,15 +105,19 @@ function getFeatureIcon(feature: string) {
   return <FaCode className="text-gray-500" size={16} />;
 }
 
+// FIXED: params is now Promise
 export default async function ProjectPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  // Await the params Promise
+  const { id } = await params;
+
   let projectData: ProjectResponse;
 
   try {
-    projectData = await getProject(params.id);
+    projectData = await getProject(id); // Use the awaited id
   } catch (error) {
     notFound();
   }

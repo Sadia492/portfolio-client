@@ -40,7 +40,7 @@ interface ProjectResponse {
 export const revalidate = 60;
 
 async function getProjects(): Promise<ProjectResponse> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects`, {
     cache: "no-store",
   });
 

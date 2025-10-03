@@ -29,7 +29,7 @@ interface BlogResponse {
 export const revalidate = 60;
 
 async function getBlogs(): Promise<BlogResponse> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blogs`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`, {
     // Remove next.revalidate since we're using export const revalidate
     cache: "no-store", // Ensure fresh data on each regeneration
   });

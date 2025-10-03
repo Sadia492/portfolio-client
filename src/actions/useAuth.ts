@@ -18,7 +18,7 @@ export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  console.log(user);
   // Check if user is logged in
   const checkAuth = async (): Promise<User | null> => {
     try {

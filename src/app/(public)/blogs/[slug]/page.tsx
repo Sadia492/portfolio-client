@@ -30,9 +30,12 @@ interface BlogResponse {
 export const revalidate = 120;
 
 async function getBlog(slug: string): Promise<BlogResponse> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blogs/${slug}`, {
-    cache: "no-store", // Ensure fresh data
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/blogs/${slug}`,
+    {
+      cache: "no-store", // Ensure fresh data
+    }
+  );
 
   if (!res.ok) {
     if (res.status === 404) {
@@ -49,7 +52,7 @@ export async function generateStaticParams() {
   try {
     // For ISR, we can pre-generate the most popular pages
     // or return an empty array to rely on on-demand generation
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blogs`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`, {
       next: { revalidate: 3600 }, // Cache for 1 hour for build
     });
 
@@ -72,14 +75,15 @@ export async function generateStaticParams() {
   }
 }
 
-// Generate metadata for SEO
+// Generate metadata for SEO - FIXED: params is now Promise
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
   try {
-    const blogData = await getBlog(params.slug);
+    const { slug } = await params; // Await the params
+    const blogData = await getBlog(slug);
     const blog = blogData.data;
 
     return {
@@ -121,15 +125,19 @@ function formatDate(dateString: string): string {
   });
 }
 
+// Main component - FIXED: params is now Promise
 export default async function BlogPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
+  // Await the params Promise
+  const { slug } = await params;
+
   let blogData: BlogResponse;
 
   try {
-    blogData = await getBlog(params.slug);
+    blogData = await getBlog(slug);
   } catch (error) {
     notFound();
   }

@@ -57,19 +57,20 @@ export default function Sidebar() {
       {/* Mobile Menu Button */}
       <button
         onClick={toggleMobile}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-black text-white rounded-md"
+        className="lg:hidden fixed top-4 left-4 z-50 p-3 bg-black text-white rounded-md shadow-lg hover:bg-gray-800 transition-colors"
       >
         {isMobileOpen ? (
-          <X className="h-6 w-6" />
+          <X className="h-5 w-5" />
         ) : (
-          <Menu className="h-6 w-6" />
+          <Menu className="h-5 w-5" />
         )}
       </button>
 
       {/* Mobile Overlay */}
+      {/* Mobile Overlay - lighter */}
       {isMobileOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+          className="lg:hidden fixed inset-0 bg-black/30 z-30"
           onClick={() => setIsMobileOpen(false)}
         />
       )}
@@ -77,11 +78,12 @@ export default function Sidebar() {
       {/* Sidebar */}
       <aside
         className={`
-        fixed lg:static inset-y-0 left-0 z-40
-        flex h-screen w-64 flex-col border-r bg-black text-white
-        transform transition-transform duration-300 ease-in-out
-        ${isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
-      `}
+    fixed lg:static inset-y-0 left-0 z-40
+    flex w-64 flex-col border-r bg-black text-white
+    h-screen lg:h-full
+    transform transition-transform duration-300 ease-in-out
+    ${isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+  `}
       >
         {/* Logo/Brand */}
         <div className="p-6 border-b border-gray-700">
