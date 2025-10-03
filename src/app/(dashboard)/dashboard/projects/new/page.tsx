@@ -88,14 +88,17 @@ export default function NewProjectPage() {
 
     try {
       // Send the data exactly as it is, without processing features
-      const response = await fetch("http://localhost:5000/api/projects", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(formData), // Send formData directly like the blog
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/projects`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(formData), // Send formData directly like the blog
+        }
+      );
 
       if (response.ok) {
         await Swal.fire({

@@ -22,9 +22,12 @@ export default async function BlogViewPage({ params }: PageProps) {
   const { id } = params;
   console.log(id);
   // Fetch single blog from API
-  const res = await fetch(`http://localhost:5000/api/blogs/by-id/${id}`, {
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/blogs/by-id/${id}`,
+    {
+      cache: "no-store",
+    }
+  );
   //   console.log(res);
 
   if (!res.ok) {

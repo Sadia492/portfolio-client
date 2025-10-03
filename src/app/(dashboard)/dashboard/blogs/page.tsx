@@ -20,12 +20,15 @@ export default async function DashboardBlogsPage() {
     );
   }
 
-  const res = await fetch("http://localhost:5000/api/blogs/admin/all", {
-    headers: {
-      Cookie: `token=${token}`,
-    },
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/blogs/admin/all`,
+    {
+      headers: {
+        Cookie: `token=${token}`,
+      },
+      cache: "no-store",
+    }
+  );
 
   if (!res.ok) {
     return (

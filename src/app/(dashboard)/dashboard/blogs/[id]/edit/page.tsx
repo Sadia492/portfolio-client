@@ -41,7 +41,7 @@ export default function EditBlogPage() {
     const fetchBlog = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/blogs/by-id/${blogId}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/blogs/by-id/${blogId}`
         );
 
         const blogData = await response.json();
@@ -118,7 +118,7 @@ export default function EditBlogPage() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/blogs/${blogId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/blogs/${blogId}`,
         {
           method: "PUT",
           headers: {

@@ -23,9 +23,12 @@ export function useAuth() {
   const checkAuth = async (): Promise<User | null> => {
     try {
       setIsLoading(true);
-      const response = await fetch("http://localhost:5000/api/auth/me", {
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/me`,
+        {
+          credentials: "include",
+        }
+      );
 
       if (response.ok) {
         const data: AuthResponse = await response.json();
@@ -58,14 +61,17 @@ export function useAuth() {
   // Login function
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       if (response.ok) {
         await checkAuth(); // Re-check auth status after login
@@ -81,7 +87,7 @@ export function useAuth() {
   // Logout function
   const logout = async (): Promise<void> => {
     try {
-      await fetch("http://localhost:5000/api/auth/logout", {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/logout`, {
         method: "POST",
         credentials: "include",
       });

@@ -25,7 +25,7 @@ export function DeleteButton({ projectId, token }: DeleteButtonProps) {
     if (result.isConfirmed) {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/projects/${projectId}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/projects/${projectId}`,
           {
             method: "DELETE",
             headers: {
