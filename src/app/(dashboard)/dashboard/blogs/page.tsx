@@ -113,13 +113,13 @@ export default async function DashboardBlogsPage() {
                   <td className="px-6 py-4 text-center">
                     <div className="flex justify-center gap-2">
                       <Link
-                        href={`/dashboard/blogs/${blog.slug}`}
+                        href={`/dashboard/blogs/${blog.id}`}
                         className="px-3 py-1 text-sm text-blue-600 border border-blue-600 rounded hover:bg-blue-50"
                       >
                         View
                       </Link>
                       <Link
-                        href={`/dashboard/blogs/${blog.slug}/edit`}
+                        href={`/dashboard/blogs/${blog.id}/edit`}
                         className="px-3 py-1 text-sm text-green-600 border border-green-600 rounded hover:bg-green-50"
                       >
                         Edit

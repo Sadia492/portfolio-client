@@ -41,7 +41,7 @@ export default function EditBlogPage() {
     const fetchBlog = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/blogs/${blogId}`
+          `http://localhost:5000/api/blogs/by-id/${blogId}`
         );
 
         const blogData = await response.json();

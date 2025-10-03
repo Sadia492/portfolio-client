@@ -19,10 +19,10 @@ interface PageProps {
 }
 
 export default async function BlogViewPage({ params }: PageProps) {
-  const { id: slug } = params;
-  console.log(slug);
+  const { id } = params;
+  console.log(id);
   // Fetch single blog from API
-  const res = await fetch(`http://localhost:5000/api/blogs/${slug}`, {
+  const res = await fetch(`http://localhost:5000/api/blogs/by-id/${id}`, {
     cache: "no-store",
   });
   //   console.log(res);
