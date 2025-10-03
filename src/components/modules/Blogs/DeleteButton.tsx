@@ -5,10 +5,10 @@ import Swal from "sweetalert2";
 
 interface DeleteButtonProps {
   blogId: string;
-  token: string;
+  // Remove token from props - we don't need it!
 }
 
-export function DeleteButton({ blogId, token }: DeleteButtonProps) {
+export function DeleteButton({ blogId }: DeleteButtonProps) {
   const handleDelete = async () => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -27,10 +27,8 @@ export function DeleteButton({ blogId, token }: DeleteButtonProps) {
           `${process.env.NEXT_PUBLIC_API_URL}/api/blogs/${blogId}`,
           {
             method: "DELETE",
-            headers: {
-              Cookie: `token=${token}`,
-            },
-            credentials: "include",
+            credentials: "include", // ✅ Browser automatically sends cookies
+            // Remove headers - don't manually send cookie!
           }
         );
 

@@ -13,9 +13,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import toast from "react-hot-toast";
+import { useAuth } from "@/actions/useAuth";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,14 +38,17 @@ export default function LoginPage() {
         }
       );
 
+      console.log(res);
+
       const data = await res.json();
+      console.log(data);
 
       if (!res.ok || !data.success) {
         toast.error(data.message || "Invalid login credentials");
       } else {
         toast.success("Logged in successfully!");
         // Redirect to dashboard or reload
-        window.location.href = "/dashboard/blogs";
+        window.location.href = "/dashboard/stat";
       }
     } catch (err) {
       console.error("Login error:", err);

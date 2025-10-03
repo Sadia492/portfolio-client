@@ -20,8 +20,6 @@ export default async function BlogViewPage({
   // Await the params Promise
   const { id } = await params;
 
-  console.log(id);
-
   // Fetch single blog from API
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/blogs/by-id/${id}`,
@@ -41,7 +39,6 @@ export default async function BlogViewPage({
   }
 
   const data = await res.json();
-  console.log(data);
   const blog: Blog = data.data;
 
   if (!blog) {

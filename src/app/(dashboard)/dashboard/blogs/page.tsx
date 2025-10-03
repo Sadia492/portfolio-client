@@ -1,47 +1,82 @@
 // src/app/dashboard/blogs/page.tsx
+"use client";
+
 import { DeleteButton } from "@/components/modules/Blogs/DeleteButton";
 import { TogglePublishButton } from "@/components/modules/Blogs/TogglePublishButton";
-import { cookies } from "next/headers";
 import Link from "next/link";
-// import { DeleteButton } from "./DeleteButton";
-// import { TogglePublishButton } from "./TogglePublishButton";
+import { useEffect, useState } from "react";
 
-export default async function DashboardBlogsPage() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
+interface Blog {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  published: boolean;
+  createdAt: string;
+  author: {
+    name: string;
+    email: string;
+  };
+}
 
-  if (!token) {
+export default function DashboardBlogsPage() {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/blogs/admin/all`,
+          {
+            credentials: "include", // Cookies are sent automatically
+            cache: "no-store",
+          }
+        );
+
+        if (!res.ok) {
+          throw new Error(`Failed to fetch blogs (${res.status})`);
+        }
+
+        const blogsData = await res.json();
+        setBlogs(blogsData.data || []);
+      } catch (err) {
+        console.error("Error fetching blogs:", err);
+        setError("Failed to load blogs. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
+  if (loading) {
     return (
-      <section className="p-6">
-        <p className="text-red-600 font-medium">
-          You are not authorized. Please log in.
-        </p>
+      <section className="py-12 px-6 bg-gray-50 min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading blogs...</p>
+        </div>
       </section>
     );
   }
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/blogs/admin/all`,
-    {
-      headers: {
-        Cookie: `token=${token}`,
-      },
-      cache: "no-store",
-    }
-  );
-
-  if (!res.ok) {
+  if (error) {
     return (
       <section className="p-6">
-        <p className="text-red-600 font-medium">
-          Failed to fetch blogs ({res.status}) – Not authorized
-        </p>
+        <p className="text-red-600 font-medium">{error}</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          Try Again
+        </button>
       </section>
     );
   }
-
-  const blogsData = await res.json();
-  const blogs = blogsData.data || [];
 
   return (
     <section className="py-12 px-6 bg-gray-50 min-h-screen">
@@ -86,7 +121,7 @@ export default async function DashboardBlogsPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {blogs.map((blog: any) => (
+              {blogs.map((blog) => (
                 <tr key={blog.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 text-sm text-gray-900">
                     <div>
@@ -127,10 +162,9 @@ export default async function DashboardBlogsPage() {
                       >
                         Edit
                       </Link>
-                      <DeleteButton blogId={blog.id} token={token} />
+                      <DeleteButton blogId={blog.id} />
                       <TogglePublishButton
                         blogId={blog.id}
-                        token={token}
                         isPublished={blog.published}
                       />
                     </div>
