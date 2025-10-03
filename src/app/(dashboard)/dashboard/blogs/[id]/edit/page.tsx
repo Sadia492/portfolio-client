@@ -44,10 +44,6 @@ export default function EditBlogPage() {
           `http://localhost:5000/api/blogs/${blogId}`
         );
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch blog");
-        }
-
         const blogData = await response.json();
 
         if (blogData.success && blogData.data) {
@@ -56,8 +52,6 @@ export default function EditBlogPage() {
             content: blogData.data.content,
             published: blogData.data.published,
           });
-        } else {
-          throw new Error("Blog not found");
         }
       } catch (error) {
         console.error("Error fetching blog:", error);
