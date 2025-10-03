@@ -1,13 +1,30 @@
-// src/app/dashboard/blogs/new/page.tsx
+// src/app/dashboard/blogs/[id]/edit/page.tsx
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import Swal from "sweetalert2";
 
-export default function NewBlogPage() {
+interface Blog {
+  id: string;
+  title: string;
+  content: string;
+  published: boolean;
+  slug: string;
+  createdAt: string;
+  author: {
+    name: string;
+    email: string;
+  };
+}
+
+export default function EditBlogPage() {
   const router = useRouter();
+  const params = useParams();
+  const blogId = params.id as string;
+
+  const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
@@ -18,6 +35,45 @@ export default function NewBlogPage() {
     title: "",
     content: "",
   });
+
+  // Fetch blog data
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/blogs/${blogId}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch blog");
+        }
+
+        const blogData = await response.json();
+
+        if (blogData.success && blogData.data) {
+          setFormData({
+            title: blogData.data.title,
+            content: blogData.data.content,
+            published: blogData.data.published,
+          });
+        } else {
+          throw new Error("Blog not found");
+        }
+      } catch (error) {
+        console.error("Error fetching blog:", error);
+        await Swal.fire({
+          title: "Error!",
+          text: "Failed to load blog",
+          icon: "error",
+        });
+        router.push("/dashboard/blogs");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBlog();
+  }, [blogId, router]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -67,40 +123,41 @@ export default function NewBlogPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/blogs", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/blogs/${blogId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) {
         await Swal.fire({
           title: "Success!",
-          text: "Blog created successfully!",
+          text: "Blog updated successfully!",
           icon: "success",
           confirmButtonColor: "#3085d6",
         });
-
-        // Redirect to blogs list
         router.push("/dashboard/blogs");
         router.refresh();
       } else {
         const errorData = await response.json();
         await Swal.fire({
           title: "Error!",
-          text: errorData.message || "Failed to create blog",
+          text: errorData.message || "Failed to update blog",
           icon: "error",
           confirmButtonColor: "#d33",
         });
       }
     } catch (error) {
-      console.error("Error creating blog:", error);
+      console.error("Error updating blog:", error);
       await Swal.fire({
         title: "Error!",
-        text: "Failed to create blog. Please try again.",
+        text: "Failed to update blog. Please try again.",
         icon: "error",
         confirmButtonColor: "#d33",
       });
@@ -109,23 +166,32 @@ export default function NewBlogPage() {
     }
   };
 
+  if (isLoading) {
+    return (
+      <section className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading blog...</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section className="py-12 px-6 bg-gray-50">
-      <div className="max-w-7xl mx-auto w-full ">
+    <section className="min-h-screen bg-gray-50">
+      <div className="py-8 px-6 max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-4">
             <Link
               href="/dashboard/blogs"
-              className="text-gray-600 hover:text-gray-900 transition-colors"
+              className="text-gray-600 hover:text-gray-900 transition-colors flex items-center gap-2"
             >
               ← Back to Blogs
             </Link>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">Create New Blog</h1>
-          <p className="text-gray-600 mt-2">
-            Write and publish a new blog post
-          </p>
+          <h1 className="text-3xl font-bold text-gray-900">Edit Blog</h1>
+          <p className="text-gray-600 mt-2">Update your blog post content</p>
         </div>
 
         {/* Blog Form */}
@@ -198,7 +264,7 @@ export default function NewBlogPage() {
                 disabled={isSubmitting}
               />
               <label htmlFor="published" className="ml-2 text-sm text-gray-700">
-                Publish immediately
+                Publish this blog
               </label>
             </div>
 
@@ -212,10 +278,10 @@ export default function NewBlogPage() {
                 {isSubmitting ? (
                   <>
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Creating...
+                    Updating...
                   </>
                 ) : (
-                  "Create Blog"
+                  "Update Blog"
                 )}
               </button>
 
@@ -225,6 +291,14 @@ export default function NewBlogPage() {
               >
                 Cancel
               </Link>
+
+              <Link
+                href={`/blogs/${blogId}`}
+                target="_blank"
+                className="border border-green-300 text-green-700 px-6 py-3 rounded-lg font-semibold hover:bg-green-50 transition-colors"
+              >
+                Preview
+              </Link>
             </div>
           </form>
         </div>
@@ -232,13 +306,14 @@ export default function NewBlogPage() {
         {/* Tips Section */}
         <div className="mt-8 bg-blue-50 rounded-lg p-6 border border-blue-200">
           <h3 className="text-lg font-semibold text-blue-900 mb-2">
-            💡 Writing Tips
+            💡 Editing Tips
           </h3>
           <ul className="text-sm text-blue-800 space-y-1">
-            <li>• Write clear and engaging titles</li>
-            <li>• Use proper formatting and paragraphs</li>
-            <li>• Minimum 50 characters required for content</li>
-            <li>• You can save as draft or publish immediately</li>
+            <li>• Update your title to make it more engaging</li>
+            <li>• Improve content clarity and structure</li>
+            <li>• Check for grammar and spelling errors</li>
+            <li>• Use the preview button to see how it looks</li>
+            <li>• Toggle publish status as needed</li>
           </ul>
         </div>
       </div>

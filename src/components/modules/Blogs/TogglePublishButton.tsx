@@ -30,7 +30,7 @@ export function TogglePublishButton({
     if (result.isConfirmed) {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/blogs/${blogId}`,
+          `http://localhost:5000/api/blogs/${blogId}/publish`,
           {
             method: "PATCH",
             headers: {
