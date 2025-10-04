@@ -1,36 +1,135 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌐 My Portfolio
 
-## Getting Started
+[![Live Demo](https://i.ibb.co.com/hFgM5kHs/image.png)](https://portfolio-client-five-psi.vercel.app/)
 
-First, run the development server:
+A **personal portfolio website** built with **Next.js, Prisma, and Express.js**, featuring a secure dashboard for blog and project management. The site is optimized for **SEO, performance, and UX**, ensuring both public visitors and the site owner have an engaging experience.
+
+---
+
+## 🚀 Introduction
+
+This portfolio website is designed to:
+
+- Showcase **projects and blogs**.
+- Provide a **secure dashboard** for the owner to manage content.
+- Highlight **skills, work experience, and personal information** in an "About Me" section.
+- Deliver a **responsive, polished, and accessible** user experience.
+
+---
+
+## ✨ Features
+
+### 🔓 Public Pages (No Login Required)
+
+- **About Me:** Static personal details (bio, contact, skills, work experience).
+- **Blog Management:**
+
+  - View all blogs page (ISR for dynamic updates).
+  - Individual blog pages generated dynamically with `getStaticPaths` + `revalidate`.
+
+- **Project Showcase:** List of projects with thumbnail, description, links, and features.
+
+### 🔒 Private Pages (Owner Only)
+
+- **Authentication & Authorization:**
+
+  - JWT-based authentication with bcrypt password hashing.
+  - Admin seeded in backend for secure login.
+
+- **Dashboard:**
+
+  - Manage blogs and projects (CRUD functionality).
+  - Private dashboard with owner-only access.
+
+---
+
+## 🛠 Tech Stack
+
+- **Frontend:** Next.js (TypeScript)
+- **Styling:** Tailwind CSS
+- **Backend:** Node.js / Express.js
+- **Database:** PostgreSQL + Prisma (or MongoDB + Mongoose alternative)
+- **Authentication:** JWT + bcrypt
+- **Notifications:** react-hot-toast
+
+---
+
+## ⚙️ Installation
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/Sadia492/portfolio-client
+cd portfolio
+```
+
+### 2️⃣ Install Dependencies
+
+```bash
+npm install
+# or
+yarn install
+```
+
+### 3️⃣ Setup Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+DATABASE_URL=your_database_connection_string
+```
+
+### 4️⃣ Database Setup
+
+```bash
+npx prisma migrate dev --name init
+npx prisma db seed
+```
+
+### 5️⃣ Run the Development Server
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open: [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ▶️ Usage
 
-## Learn More
+- **Public Users:**
 
-To learn more about Next.js, take a look at the following resources:
+  - Browse About Me, Blogs, and Projects.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Portfolio Owner:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+  - Login via dashboard.
+  - Add/update/delete blogs and projects.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔑 Demo Credentials
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To access the **admin dashboard**, use the following credentials:
+
+```txt
+Email: admin@portfolio.com
+Password: admin123
+```
+
+---
+
+## 🔧 Configuration
+
+- ISR & SSG used for fast static rendering.
+- Prisma schema configurable in `prisma/schema.prisma`.
+- Tailwind configuration in `tailwind.config.js`.
+
+---
+
+## 👨‍💻 Contributors
+
+- **Portfolio Owner:** Sadia Afrin Snigdha

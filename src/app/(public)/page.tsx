@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Toaster } from "react-hot-toast";
 
 export const metadata = {
-  title: "Home | Snigdha",
+  title: "Home | My Portfolio",
 };
 
 export default function HomePage() {
