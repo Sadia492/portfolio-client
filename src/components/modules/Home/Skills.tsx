@@ -134,17 +134,21 @@ export default function Skills() {
 
   return (
     <section id="skills" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto xl:px-28 px-10">
         {/* Header Section */}
+        <h1 className="text-4xl font-bold text-center bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text mb-4 mt-10">
+          Skills & Technologies
+        </h1>
+        <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto mb-8 rounded-full"></div>
+        <p className="text-gray-600 mt-4 text-center">
+          These include, but are not limited to, the technologies I use for
+          building modern web applications
+        </p>
         <div className="flex flex-col lg:flex-row justify-between items-center mb-12">
           <div className="text-center lg:text-left mb-8 lg:mb-0">
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text">
+            {/* <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text">
               Skills & Technologies
-            </h2>
-            <p className="text-gray-600 mt-4 max-w-2xl">
-              These include, but are not limited to, the technologies I use for
-              building modern web applications
-            </p>
+            </h2> */}
           </div>
 
           {/* Navigation Buttons */}
