@@ -11,6 +11,9 @@ interface Blog {
     email: string;
   };
 }
+export const metadata = {
+  title: "Blog | My Portfolio",
+};
 
 export default async function BlogViewPage({
   params,

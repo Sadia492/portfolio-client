@@ -6,6 +6,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { FaEnvelope, FaPhone, FaWhatsapp } from "react-icons/fa";
 import toast from "react-hot-toast";
 import Lottie from "lottie-react";
+import Head from "next/head";
 
 // You'll need to place your animation JSON file in the public folder
 // or import it if it's in your assets folder
@@ -54,6 +55,9 @@ export default function ContactForm() {
 
   return (
     <section id="contact" className="py-20 mt-10 bg-gray-50">
+      <Head>
+        <title>Contact | My Portfolio</title>
+      </Head>
       <div className="container mx-auto">
         {/* Header */}
         <div className="text-center mb-16">

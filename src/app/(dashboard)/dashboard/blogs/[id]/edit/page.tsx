@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import Swal from "sweetalert2";
+import Head from "next/head";
 
 interface Blog {
   id: string;
@@ -173,6 +174,9 @@ export default function EditBlogPage() {
 
   return (
     <section className="min-h-screen bg-gray-50">
+      <Head>
+        <title>Edit Blog | My Portfolio</title>
+      </Head>
       <div className="py-8 px-6 max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">

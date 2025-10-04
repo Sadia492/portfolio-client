@@ -2,6 +2,9 @@ import React from "react";
 import Image from "next/image";
 import { FaBook, FaChess, FaMusic, FaSun } from "react-icons/fa";
 import Link from "next/link";
+export const metadata = {
+  title: "About Me | My Portfolio",
+};
 
 export default function About() {
   return (

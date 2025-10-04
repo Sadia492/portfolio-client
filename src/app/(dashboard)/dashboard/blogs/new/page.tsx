@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Swal from "sweetalert2";
+import Head from "next/head";
 
 export default function NewBlogPage() {
   const router = useRouter();
@@ -114,6 +115,9 @@ export default function NewBlogPage() {
 
   return (
     <section className="py-12 px-6 bg-gray-50">
+      <Head>
+        <title>Add Blog | My Portfolio</title>
+      </Head>
       <div className="max-w-7xl mx-auto w-full ">
         {/* Header */}
         <div className="mb-8">

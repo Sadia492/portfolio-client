@@ -35,11 +35,7 @@ export default function Hero() {
           <div className="space-y-4">
             <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
               <Typewriter
-                words={[
-                  "Frontend Developer",
-                  "React Enthusiast",
-                  "Problem Solver",
-                ]}
+                words={["Web Developer", "React Enthusiast", "Problem Solver"]}
                 loop={true}
                 cursor
                 cursorStyle="_"

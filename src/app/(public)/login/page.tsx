@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/card";
 import toast from "react-hot-toast";
 import { useAuth } from "@/actions/useAuth";
+import Head from "next/head";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
@@ -48,7 +49,7 @@ export default function LoginPage() {
       } else {
         toast.success("Logged in successfully!");
         // Redirect to dashboard or reload
-        window.location.href = "/dashboard/stat";
+        window.location.href = "/dashboard/blogs";
       }
     } catch (err) {
       console.error("Login error:", err);
@@ -60,6 +61,9 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-background container mx-auto flex items-center justify-center p-4">
+      <Head>
+        <title>Login</title>
+      </Head>
       <div className="w-full max-w-md">
         <Card>
           <CardHeader className="space-y-1">

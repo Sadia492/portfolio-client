@@ -25,6 +25,10 @@ interface BlogResponse {
   data: Blog[];
 }
 
+export const metadata = {
+  title: "Blogs | My Portfolio",
+};
+
 // ISR: This page will be regenerated every 60 seconds
 export const revalidate = 60;
 

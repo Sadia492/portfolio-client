@@ -3,6 +3,7 @@
 
 import { DeleteButton } from "@/components/modules/Blogs/DeleteButton";
 import { TogglePublishButton } from "@/components/modules/Blogs/TogglePublishButton";
+import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -80,6 +81,9 @@ export default function DashboardBlogsPage() {
 
   return (
     <section className="py-12 px-6 bg-gray-50 min-h-screen">
+      <Head>
+        <title>Blogs | My Portfolio</title>
+      </Head>
       <div className="max-w-7xl mx-auto w-full">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">

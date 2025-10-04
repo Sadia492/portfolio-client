@@ -21,6 +21,9 @@ interface Owner {
   name: string;
   email: string;
 }
+export const metadata = {
+  title: "Projects | My Portfolio",
+};
 
 interface Project {
   id: string;

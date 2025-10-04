@@ -35,7 +35,9 @@ interface ProjectResponse {
   success: boolean;
   data: Project[];
 }
-
+export const metadata = {
+  title: "Projects | My Portfolio",
+};
 // ISR: This page will be regenerated every 60 seconds
 export const revalidate = 60;
 
