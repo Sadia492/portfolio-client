@@ -15,8 +15,13 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "My Portfolio & Blog",
-  description:
-    "Personal portfolio website showcasing my projects, blogs, and skills. Built with Next.js, Prisma, and Express.",
+  description: "Portfolio showcasing my projects and blogs.",
+  icons: {
+    icon: [
+      { url: "/logo.png", sizes: "64x64", type: "image/png" },
+      { url: "/logo.png", sizes: "32x32", type: "image/png" },
+    ],
+  },
 };
 
 export default function RootLayout({
